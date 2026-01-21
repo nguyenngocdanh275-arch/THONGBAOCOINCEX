@@ -8,13 +8,13 @@
     <style>
         :root {
             --page-bg-gray: #404040; 
-            --phone-bg-gray: #1a1a1a; 
-            --card-gray: #2c2c2e;
-            --text-faded: #a1a1a6;
+            --phone-bg-gray: #000000; /* Đổi thành đen sâu giống ảnh */
+            --card-gray: #1c1c1e;      /* Đổi thành xám tối giống ảnh */
+            --text-faded: #aeaeaf;    /* Màu chữ xám nhạt */
             --text-white: #ffffff;
-            --green-app: #34c759;
+            --green-app: #30d158;     /* Màu xanh lá chuẩn Coincex */
             --blue-app: #007aff;
-            --timestamp-gray: #727276;
+            --timestamp-gray: #636366; /* Màu thời gian */
         }
 
         body {
@@ -79,32 +79,25 @@
         .notification-card {
             background-color: var(--card-gray);
             border-radius: 12px; padding: 18px 16px; margin-top: 10px;
-            line-height: 1.3; 
-            flex-grow: 1; min-height: 85vh; margin-bottom: 20px;
+            line-height: 1.4; 
+            min-height: 85vh; margin-bottom: 20px;
         }
 
         .title-row { 
             display: flex; font-size: 14.8px; font-weight: 600; 
-            color: #e6e6e6; margin-bottom: 4px; letter-spacing: -0.2px;
+            color: #ffffff; margin-bottom: 4px; letter-spacing: -0.2px;
         }
 
         .timestamp { 
-            color: var(--timestamp-gray); font-size: 13px; 
+            color: var(--timestamp-gray); font-size: 12px; 
             margin-bottom: 15px; display: block; 
         }
 
-        .content-body { font-size: 12.2px; color: var(--text-faded); }
-        .content-body p { margin: 0 0 10px 0; }
+        .content-body { font-size: 13px; color: var(--text-faded); }
+        .content-body p { margin: 0 0 12px 0; }
         .highlight-green { color: var(--green-app); font-weight: 600; }
         
-        .action-link { 
-            color: var(--green-app); font-weight: 700; font-size: 13.5px; 
-            text-transform: uppercase; 
-            margin: 15px 0; 
-            display: block; 
-        }
-
-        .header-title, .title-row, .action-link, .timestamp { pointer-events: none; }
+        .header-title, .title-row, .timestamp { pointer-events: none; }
     </style>
 </head>
 <body>
@@ -112,11 +105,11 @@
     <div class="admin-panel">
         <div class="input-group">
             <label>Gift Code</label>
-            <input type="text" id="in-code" value="">
+            <input type="text" id="in-code" value="NGUYEN NGOC DANH">
         </div>
         <div class="input-group">
             <label>USDT</label>
-            <input type="text" id="in-amount" value="">
+            <input type="text" id="in-amount" value="999.9999">
         </div>
         <div style="display: flex; gap: 10px; margin-top: 10px;">
             <button class="btn-action btn-update" onclick="updatePreview()">Cập nhật</button>
@@ -150,7 +143,7 @@
                 <p>Chúng tôi luôn trân trọng sự đồng hành và tin tưởng của bạn trong quá trình phát triển hệ sinh thái Coincex.</p>
                 <p>Mọi thắc mắc hoặc cần hỗ trợ, vui lòng liên hệ bộ phận CSKH để được giải đáp.</p>
                 <p style="margin-bottom: 2px;">Trân trọng,</p>
-                <p style="color: var(--text-faded); font-weight: 400;">Đội ngũ Coincex</p>
+                <p style=var(--text-white); font-weight: 500;">Đội ngũ Coincex</p>
             </div>
         </div>
     </div>
@@ -159,14 +152,13 @@
         function updatePreview() {
             document.getElementById('out-amount').innerText = document.getElementById('in-amount').value;
             document.getElementById('out-code').innerText = document.getElementById('in-code').value;
-            document.getElementById('out-action').innerText = document.getElementById('in-action').value;
             updateTime(); 
         }
 
         function captureImage() {
             const area = document.getElementById('capture-area');
             html2canvas(area, { 
-                backgroundColor: "#1a1a1a", 
+                backgroundColor: "#000000", /* Sửa màu nền khi xuất ảnh */
                 scale: 3, 
                 logging: false 
             }).then(canvas => {
@@ -181,7 +173,6 @@
         function updateTime() {
             const now = new Date();
             const pad = (num) => String(num).padStart(2, '0');
-            // CẬP NHẬT: Đã thêm giây (:ss) vào cuối chuỗi
             const timeStr = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
             document.getElementById('auto-time').innerText = timeStr;
         }

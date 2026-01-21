@@ -7,17 +7,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
-            --bg-black: #000000;
-            --card-gray: #1c1c1e;
-            --text-faded: #a1a1a6; /* Màu nhạt chuẩn App */
+            --page-bg-gray: #404040; 
+            --phone-bg-gray: #1a1a1a; 
+            --card-gray: #2c2c2e;
+            --text-faded: #a1a1a6;
             --text-white: #ffffff;
             --green-app: #34c759;
-            --blue-app: #007aff; /* Thêm màu xanh dương cho nút cập nhật */
+            --blue-app: #007aff;
             --timestamp-gray: #727276;
         }
 
         body {
-            background-color: #121212;
+            background-color: var(--page-bg-gray);
             color: var(--text-faded);
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
             margin: 0;
@@ -25,91 +26,84 @@
             flex-direction: column;
             align-items: center;
             -webkit-font-smoothing: antialiased;
-            user-select: none;
+            padding-top: 20px;
         }
 
-        /* Bảng điều khiển tối giản */
+        /* Bảng điều khiển */
         .admin-panel {
             width: 100%;
             max-width: 375px;
             background: #2c2c2e;
             padding: 15px;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
+            border-radius: 15px;
             margin-bottom: 20px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
             gap: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
         .input-group { display: flex; flex-direction: column; gap: 4px; }
         .input-group label { font-size: 10px; color: var(--green-app); text-transform: uppercase; font-weight: bold; }
-        
-        input { 
-            background: #1c1c1e; border: 1px solid #3a3a3c; 
-            color: white; padding: 8px; border-radius: 5px; font-size: 12px; 
-        }
+        input { background: #1c1c1e; border: 1px solid #3a3a3c; color: white; padding: 8px; border-radius: 5px; font-size: 12px; }
 
-        /* Style chung cho nút */
         .btn-action {
-            color: white; border: none;
-            padding: 10px; border-radius: 5px; font-weight: bold; 
-            cursor: pointer; font-size: 13px; margin-top: 5px;
-            width: 100%;
+            color: white; border: none; padding: 10px; border-radius: 5px; 
+            font-weight: bold; cursor: pointer; font-size: 13px; width: 100%;
         }
-
-        /* Màu riêng cho từng nút */
         .btn-update { background: var(--blue-app); }
-        .btn-update:hover { background: #0062cc; }
-
         .btn-download { background: var(--green-app); }
-        .btn-download:hover { background: #2da84b; }
-
 
         /* Giao diện App */
         .phone-view {
             width: 375px;
-            background-color: var(--bg-black);
+            background-color: var(--phone-bg-gray);
             min-height: 812px;
             padding: 0 16px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
         }
 
         .header {
             display: grid; grid-template-columns: 40px 1fr 40px; 
-            align-items: center; height: 44px; flex-shrink: 0;
+            align-items: center; height: 44px; flex-shrink: 0; margin-top: 5px;
         }
 
-        .header-title {
-            font-size: 14.5px; font-weight: 500; text-align: center; color: var(--text-white);
-        }
+        .header-title { font-size: 14.5px; font-weight: 500; text-align: center; color: var(--text-white); }
 
         .notification-card {
             background-color: var(--card-gray);
-            border-radius: 12px; padding: 20px 16px; margin-top: 10px;
-            line-height: 1.45; flex-grow: 1; min-height: 85vh; 
-            margin-bottom: 20px;
+            border-radius: 12px; padding: 18px 16px; margin-top: 10px;
+            line-height: 1.3; 
+            flex-grow: 1; min-height: 85vh; margin-bottom: 20px;
         }
 
         .title-row { 
             display: flex; font-size: 14.8px; font-weight: 600; 
-            color: var(--text-white); margin-bottom: 3px; letter-spacing: -0.2px;
+            color: #e6e6e6; margin-bottom: 4px; letter-spacing: -0.2px;
         }
 
-        .timestamp { color: var(--timestamp-gray); font-size: 10px; margin-bottom: 25px; display: block; }
+        .timestamp { 
+            color: var(--timestamp-gray); font-size: 13px; 
+            margin-bottom: 15px; display: block; 
+        }
+
         .content-body { font-size: 12.2px; color: var(--text-faded); }
-        .content-body p { margin: 0 0 18px 0; }
+        .content-body p { margin: 0 0 10px 0; }
         .highlight-green { color: var(--green-app); font-weight: 600; }
         
         .action-link { 
             color: var(--green-app); font-weight: 700; font-size: 13.5px; 
-            text-transform: uppercase; margin: 22px 0; display: block; 
+            text-transform: uppercase; 
+            margin: 15px 0; 
+            display: block; 
         }
 
-        /* Khóa các vùng cố định */
         .header-title, .title-row, .action-link, .timestamp { pointer-events: none; }
     </style>
 </head>
@@ -121,10 +115,9 @@
             <input type="text" id="in-code" value="">
         </div>
         <div class="input-group">
-            <label>GUSDT</label>
+            <label>USDT</label>
             <input type="text" id="in-amount" value="">
         </div>
-        
         <div style="display: flex; gap: 10px; margin-top: 10px;">
             <button class="btn-action btn-update" onclick="updatePreview()">Cập nhật</button>
             <button class="btn-action btn-download" onclick="captureImage()">Tải ảnh</button>
@@ -133,14 +126,14 @@
 
     <div id="capture-area" class="phone-view">
         <div class="header">
-            <span style="font-size: 16px; color: #ffffffdb;">←</span>
+            <span style="font-size: 24px; color: #fff; margin-left: -5px;">←</span>
             <div class="header-title">Chi tiết thông báo</div>
             <div></div>
         </div>
 
         <div class="notification-card">
             <div class="title-row">
-                <span style="margin-right: 7px;">🎁</span>
+                <span style="margin-right: 8px;">🎁</span>
                 <span>Bạn vừa nhận được mã nhận thưởng!</span>
             </div>
             
@@ -154,7 +147,6 @@
                 <p>
                     Mã nhận thưởng: <span class="highlight-green" id="out-code"></span>
                 </p>
-                
                 <p>Chúng tôi luôn trân trọng sự đồng hành và tin tưởng của bạn trong quá trình phát triển hệ sinh thái Coincex.</p>
                 <p>Mọi thắc mắc hoặc cần hỗ trợ, vui lòng liên hệ bộ phận CSKH để được giải đáp.</p>
                 <p style="margin-bottom: 2px;">Trân trọng,</p>
@@ -164,27 +156,21 @@
     </div>
 
     <script>
-        // --- HÀM 1: CHỈ CẬP NHẬT DỮ LIỆU ---
         function updatePreview() {
-            // Cập nhật dữ liệu từ các ô input vào khu vực hiển thị
             document.getElementById('out-amount').innerText = document.getElementById('in-amount').value;
             document.getElementById('out-code').innerText = document.getElementById('in-code').value;
-            
-            // Cập nhật lại thời gian thực tế lúc bấm nút
+            document.getElementById('out-action').innerText = document.getElementById('in-action').value;
             updateTime(); 
         }
 
-        // --- HÀM 2: CHỈ TẢI ẢNH ---
         function captureImage() {
-            // Xuất ảnh chất lượng cao
             const area = document.getElementById('capture-area');
             html2canvas(area, { 
-                backgroundColor: "#000000", 
+                backgroundColor: "#1a1a1a", 
                 scale: 3, 
                 logging: false 
             }).then(canvas => {
                 const link = document.createElement('a');
-                // Lấy mã code để đặt tên file cho dễ nhớ
                 const codeName = document.getElementById('in-code').value || 'Bonus';
                 link.download = `${codeName}_${Date.now()}.png`;
                 link.href = canvas.toDataURL('image/png');
@@ -194,14 +180,13 @@
 
         function updateTime() {
             const now = new Date();
-            // Định dạng lại thời gian cho đẹp hơn một chút (YYYY-MM-DD HH:mm)
-            const timeStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+            const pad = (num) => String(num).padStart(2, '0');
+            // CẬP NHẬT: Đã thêm giây (:ss) vào cuối chuỗi
+            const timeStr = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
             document.getElementById('auto-time').innerText = timeStr;
         }
         
-        // Chạy lần đầu khi tải trang
         updateTime();
-        // Gọi updatePreview lần đầu để đồng bộ dữ liệu mặc định
         updatePreview();
     </script>
 

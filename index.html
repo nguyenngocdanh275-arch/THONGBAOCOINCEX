@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coincex Notification UI</title>
+    <title>Coincex Notification Update</title>
     <style>
         body {
             background-color: #000000;
@@ -17,7 +17,6 @@
             padding-top: 20px;
         }
 
-        /* Giả lập màn hình điện thoại */
         .phone-container {
             width: 375px;
             background-color: #000000;
@@ -25,70 +24,82 @@
             border-radius: 10px;
         }
 
-        /* Header trên cùng */
+        /* Header căn giữa chuẩn */
         .header {
-            display: flex;
+            display: grid;
+            grid-template-columns: 40px 1fr 40px; /* Chia 3 cột để cột giữa luôn cân bằng */
             align-items: center;
-            padding: 15px 10px;
-            position: relative;
+            padding: 15px 5px;
         }
 
         .back-icon {
             font-size: 24px;
             cursor: pointer;
-            margin-right: 60px;
         }
 
         .header-title {
             font-size: 18px;
             font-weight: 500;
-            flex-grow: 1;
             text-align: center;
-            margin-right: 40px;
         }
 
         /* Khung thông báo chính */
         .notification-card {
             background-color: #1c1c1e;
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 24px 20px;
-            margin-top: 20px;
-            line-height: 1.6;
+            margin-top: 15px;
+            line-height: 1.5;
         }
 
         .title-row {
             display: flex;
-            align-items: center;
-            font-size: 18px;
-            font-weight: bold;
+            align-items: flex-start;
+            font-size: 19px;
+            font-weight: 700;
             margin-bottom: 8px;
         }
 
         .gift-icon {
-            margin-right: 8px;
+            margin-right: 12px;
+            margin-top: 2px;
         }
 
         .timestamp {
             color: #8e8e93;
             font-size: 14px;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            padding-left: 2px;
         }
 
         .content {
             color: #d1d1d6;
-            font-size: 15px;
-            white-space: pre-wrap; /* Giữ nguyên xuống dòng */
+            font-size: 16px;
+        }
+
+        .content p {
+            margin-bottom: 22px;
         }
 
         .highlight-green {
             color: #34c759;
-            font-weight: bold;
+            font-weight: 700;
         }
 
-        /* Hiệu ứng khi đang chỉnh sửa (tùy chọn) */
+        .action-link {
+            color: #34c759;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+            display: block;
+        }
+
+        /* Hiệu ứng khi click vào để sửa */
+        [contenteditable="true"] {
+            outline: none;
+        }
         [contenteditable="true"]:focus {
-            outline: 1px dashed #555;
-            background-color: rgba(255, 255, 255, 0.05);
+            background-color: rgba(255, 255, 255, 0.1);
             border-radius: 4px;
         }
     </style>
@@ -99,7 +110,7 @@
         <div class="header">
             <span class="back-icon">←</span>
             <div class="header-title" contenteditable="true">Chi tiết thông báo</div>
-        </div>
+            <div></div> </div>
 
         <div class="notification-card">
             <div class="title-row">
@@ -107,25 +118,47 @@
                 <span contenteditable="true">Bạn vừa nhận được mã nhận thưởng!</span>
             </div>
             
-            <div class="timestamp" contenteditable="true">2026-01-20 05:00:00</div>
+            <div class="timestamp" id="auto-time" contenteditable="true"></div>
 
             <div class="content">
-<span contenteditable="true">Thành viên thân mến,</span>
+                <p contenteditable="true">Thành viên thân mến,</p>
 
-<span contenteditable="true">Chúng tôi xin thông báo rằng bạn vừa nhận được mã nhận thưởng trị giá </span><span class="highlight-green" contenteditable="true">0.5423 USDT</span>.
+                <p>
+                    <span contenteditable="true">Chúng tôi xin thông báo rằng bạn vừa nhận được mã nhận thưởng trị giá </span>
+                    <span class="highlight-green" contenteditable="true">0.5423 USDT</span>.
+                </p>
 
-<span contenteditable="true"><span class="highlight-green" contenteditable="true">NHẬP MÃ QUÀ TẶNG</span>
+                <div class="action-link" contenteditable="true">NHẬP MÃ QUÀ TẶNG</div>
 
-<span contenteditable="true">Chúng tôi luôn trân trọng sự đồng hành và tin tưởng của bạn trong quá trình phát triển hệ sinh thái Coincex.</span>
+                <p contenteditable="true">Chúng tôi luôn trân trọng sự đồng hành và tin tưởng của bạn trong quá trình phát triển hệ sinh thái Coincex.</p>
 
-<span contenteditable="true">Mọi thắc mắc hoặc cần hỗ trợ, vui lòng liên hệ bộ phận CSKH để được giải đáp.</span>
+                <p contenteditable="true">Mọi thắc mắc hoặc cần hỗ trợ, vui lòng liên hệ bộ phận CSKH để được giải đáp.</p>
 
-<span contenteditable="true">Trân trọng,</span>
+                <p contenteditable="true">Trân trọng,</p>
 
-<span contenteditable="true">Đội ngũ Coincex</span>
+                <p contenteditable="true">Đội ngũ Coincex</p>
             </div>
         </div>
     </div>
+
+    <script>
+        // Hàm tự động cập nhật thời gian theo định dạng YYYY-MM-DD HH:mm:ss
+        function updateCurrentTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            const formattedTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+            document.getElementById('auto-time').innerText = formattedTime;
+        }
+
+        // Chạy hàm ngay khi trang web tải xong
+        window.onload = updateCurrentTime;
+    </script>
 
 </body>
 </html>

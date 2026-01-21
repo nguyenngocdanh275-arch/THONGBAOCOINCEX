@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coincex Notification UI</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding-top: 20px;
+        }
+
+        /* Giả lập màn hình điện thoại */
+        .phone-container {
+            width: 375px;
+            background-color: #000000;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        /* Header trên cùng */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 15px 10px;
+            position: relative;
+        }
+
+        .back-icon {
+            font-size: 24px;
+            cursor: pointer;
+            margin-right: 60px;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 500;
+            flex-grow: 1;
+            text-align: center;
+            margin-right: 40px;
+        }
+
+        /* Khung thông báo chính */
+        .notification-card {
+            background-color: #1c1c1e;
+            border-radius: 16px;
+            padding: 24px 20px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .title-row {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .gift-icon {
+            margin-right: 8px;
+        }
+
+        .timestamp {
+            color: #8e8e93;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .content {
+            color: #d1d1d6;
+            font-size: 15px;
+            white-space: pre-wrap; /* Giữ nguyên xuống dòng */
+        }
+
+        .highlight-green {
+            color: #34c759;
+            font-weight: bold;
+        }
+
+        /* Hiệu ứng khi đang chỉnh sửa (tùy chọn) */
+        [contenteditable="true"]:focus {
+            outline: 1px dashed #555;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-container">
+        <div class="header">
+            <span class="back-icon">←</span>
+            <div class="header-title" contenteditable="true">Chi tiết thông báo</div>
+        </div>
+
+        <div class="notification-card">
+            <div class="title-row">
+                <span class="gift-icon">🎁</span>
+                <span contenteditable="true">Bạn vừa nhận được mã nhận thưởng!</span>
+            </div>
+            
+            <div class="timestamp" contenteditable="true">2026-01-20 05:00:00</div>
+
+            <div class="content">
+<span contenteditable="true">Thành viên thân mến,</span>
+
+<span contenteditable="true">Chúng tôi xin thông báo rằng bạn vừa nhận được mã nhận thưởng trị giá </span><span class="highlight-green" contenteditable="true">0.5423 USDT</span>.
+
+<span contenteditable="true"><span class="highlight-green" contenteditable="true">NHẬP MÃ QUÀ TẶNG</span>
+
+<span contenteditable="true">Chúng tôi luôn trân trọng sự đồng hành và tin tưởng của bạn trong quá trình phát triển hệ sinh thái Coincex.</span>
+
+<span contenteditable="true">Mọi thắc mắc hoặc cần hỗ trợ, vui lòng liên hệ bộ phận CSKH để được giải đáp.</span>
+
+<span contenteditable="true">Trân trọng,</span>
+
+<span contenteditable="true">Đội ngũ Coincex</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
